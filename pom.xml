@@ -10,11 +10,12 @@
         <developer>
             <id>bgeorgi</id>
             <name>Butcovan György</name>
-            <email>butcovan.george@gmail.com</email>
+            <email>george.butcovan@gmail.com</email>
             <organization>Faculty of Informatics, University of Debrecen</organization>
             <organizationUrl>http://www.inf.unideb.hu/</organizationUrl>
         </developer>
     </developers>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.outputEncoding>UTF-8</project.build.outputEncoding>
@@ -38,6 +39,18 @@
     </dependencies>
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.11.0</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.wagon</groupId>
+                        <artifactId>wagon-ssh</artifactId>
+                        <version>3.5.1</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -105,6 +118,11 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>3.3.2</version>
+                <configuration>
+                    <links>
+                        <link>https://javadoc.io/doc/io.github.openfeign/feign-core/${feign.version}/</link>
+                    </links>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -130,14 +148,17 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.3.2</version>
-                <configuration>
-                    <links>
-                        <link>https://javadoc.io/doc/io.github.openfeign/feign-core/${feign.version}/</link>
-                    </links>
-                </configuration>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>3.16.0</version>
             </plugin>
+
         </plugins>
+
     </reporting>
+    <distributionManagement>
+        <site>
+            <id>shrek</id>
+            <url>scp://butcovangyorgy@shrek.unideb.hu:2222/home/butcovangyorgy/public_html/${project.artifactId}</url>
+        </site>
+    </distributionManagement>
 </project>
